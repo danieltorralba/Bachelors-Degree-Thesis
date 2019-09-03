@@ -167,7 +167,7 @@ def begin_machine_learning():
     print("Total Number of Observations: " + str(countTrain + countVal + countTest) + "")
 
     print("\nTRAINING THE MODEL w/ KNN USING Training Dataset... ", end="")
-    ert = ExtraTreesClassifier(n_estimators = 10, random_state = 0)
+    ert = ExtraTreesClassifier(n_estimators = 64, random_state = 0)
     ert.fit(X_train, y_train)
     # knn = KNeighborsClassifier(n_neighbors = 5)
     # knn.fit(X_train, y_train)
@@ -199,7 +199,7 @@ def begin_machine_learning():
         print("Validating iteration...", end="")
         # ml = KNeighborsClassifier(n_neighbors = 3)
         # ml.fit(X_valtrain, y_valtrain)
-        ml = ExtraTreesClassifier(n_estimators = 10, random_state = 0)
+        ml = ExtraTreesClassifier(n_estimators = 64, random_state = 0)
         ml.fit(X_valtrain, y_valtrain)
         y_pred = ml.predict(X_valtest)
         for item in y_pred:
