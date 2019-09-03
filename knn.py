@@ -139,9 +139,9 @@ def gather_datasets():
 def begin_machine_learning():
     global globaldata, globalclass
 
-    train_ratio = 0.70
-    validation_ratio = 0.15
-    test_ratio = 0.15
+    train_ratio = 0.80
+    validation_ratio = 0.10
+    test_ratio = 0.10
     globaldata = np.array(globaldata, dtype=np.float64)
     globalclass = np.array(globalclass, dtype=np.bool)
 
@@ -167,7 +167,7 @@ def begin_machine_learning():
     print("Total Number of Observations: " + str(countTrain + countVal + countTest) + "")
 
     print("\nTRAINING THE MODEL w/ KNN USING Training Dataset... ", end="")
-    knn = KNeighborsClassifier(n_neighbors = 5)
+    knn = KNeighborsClassifier(n_neighbors = 3)
     knn.fit(X_train, y_train)
     print("Done.")
 
@@ -188,6 +188,8 @@ def begin_machine_learning():
     # kfold
     print("Applying " + str(folderNum) + "-Fold Cross-Validation... ")
     accuracySum = 0
+    overallPred = []
+    overallTest = []
     kfold = KFold(folderNum, True, 1)
     for train_index, test_index in kfold.split(X_val):
         X_valtrain, X_valtest = X_val[train_index], X_val[test_index]
@@ -196,11 +198,15 @@ def begin_machine_learning():
         ml = KNeighborsClassifier(n_neighbors = 3)
         ml.fit(X_valtrain, y_valtrain)
         y_pred = ml.predict(X_valtest)
+        for item in y_pred:
+            overallPred.append(item)
+        for item in y_valtest:
+            overallTest.append(item)
         res = metrics.accuracy_score(y_valtest, y_pred)
         accuracySum += (res * 100)
         print(" Score: " + str(res))
 
-    print("\n\nAverage Accuracy during Validation Phase: " + str(accuracySum / folderNum))
+    print("\n\nAverage Accuracy during Validation Phase: " + str(accuracySum / folderNum) + "%")
     print("\nHave you written down the OTHER algorithm's average accuracy? If not, write down this")
     print("program's results (the one above), and STOP this program immediately. You will have")
     print("to execute the other program to get its Average Accuracy, and write that down.")
@@ -211,10 +217,16 @@ def begin_machine_learning():
 
     print("\nEVALUATING FOR CONFUSION MATRIX SCORE... ")
     y_pred = knn.predict(X_test)
+    for item in y_pred:
+        overallPred.append(item)
+    for item in y_test:
+        overallTest.append(item)
     res = metrics.accuracy_score(y_test, y_pred)
-    print("Accuracy Score:", res)
+    print("Accuracy Score of Training Dataset from Test Dataset:", res)
+    last = metrics.accuracy_score(overallTest, overallPred)
+    print("Overall Accuracy:",last)
     print("Report")
-    print(metrics.classification_report(y_test, y_pred))
+    print(metrics.classification_report(overallTest, overallPred))
 
     print("yay")
 # -----------------------------------------------------------------------------------------
