@@ -10,39 +10,49 @@ globalcwNum = 0
 sampleSize = 1
 # GLOBAL VARIABLES END
 
+test = [1, 2]
 
-def increment_globals():
-    global ctrlNumCounter, globalCtrlNum, globalExerNum, globalExerNum, globalcwNum, sampleSize
+print(test)
 
-    if ctrlNumCounter > sampleSize:
-        print("Last file has been reached")
-        return False
-
-    if globalcwNum == 1:
-        globalcwNum = 0
-        ctrlNumCounter += 1
-    else:
-        globalcwNum = 1
-
-
-    generate_csv_filename()
-    return True
-
-def generate_csv_filename():
-    global ctrlNumCounter, globalCtrlNum, globalExerNum, globalExerNum, sampleSize
-
-    filename = ""
-
-    if ctrlNumCounter > 9:
-        filename = "person-" + str(ctrlNumCounter) + "-" + str(globalExerNum) + "-" + str(globalcwNum) + ".csv"
-    else:
-        filename = "person-0" + str(ctrlNumCounter) + "-" + str(globalExerNum) + "-" + str(globalcwNum) + ".csv"
-
-    print(filename)
-
-while True:
-    if increment_globals() == False:
-        break
+#
+#
+# def increment_globals():
+#     global ctrlNumCounter, globalCtrlNum, globalExerNum, globalExerNum, globalcwNum, sampleSize
+#
+#     if ctrlNumCounter > sampleSize:
+#         print("Last file has been reached")
+#         return False
+#
+#     if globalExerNum > 5:
+#         globalExerNum = 1
+#         ctrlNumCounter += 1
+#     else:
+#         globalExerNum += 1
+#         if globalcwNum == 1:
+#             globalcwNum = 0
+#         else:
+#             globalcwNum = 1
+#
+#     generate_csv_filename()
+#     return True
+#
+# def generate_csv_filename():
+#     global ctrlNumCounter, globalCtrlNum, globalExerNum, globalExerNum, sampleSize
+#
+#     filename = ""
+#
+#     if ctrlNumCounter > 9:
+#         filename = "person-" + str(ctrlNumCounter) + "-" + str(globalExerNum) + "-" + str(globalcwNum) + ".csv"
+#     else:
+#         filename = "person-0" + str(ctrlNumCounter) + "-" + str(globalExerNum) + "-" + str(globalcwNum) + ".csv"
+#
+#     print(filename)
+#
+# if globalCtrlNum == 0:
+#     generate_csv_filename
+# while True:
+#     if increment_globals() == False:
+#         break
 
 
 #

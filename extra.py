@@ -139,16 +139,16 @@ def gather_datasets():
 def begin_machine_learning():
     global globaldata, globalclass
 
-    train_ratio = 0.80
-    validation_ratio = 0.10
+    train_ratio = 0.70
+    validation_ratio = 0.20
     test_ratio = 0.10
     globaldata = np.array(globaldata, dtype=np.float64)
     globalclass = np.array(globalclass, dtype=np.bool)
 
-    print("\nSplitting for 60% training and 40% temp from 100% dataset... ", end="")
+    print("\nSplitting for 70% training and 30% temp from 100% dataset... ", end="")
     X_train, X_tmp, y_train, y_tmp = train_test_split(globaldata, globalclass, test_size = 1 - train_ratio)
     print("Done.")
-    print("Splitting for 20% validation and 20% testing from 40% temp... ", end="")
+    print("Splitting for 20% validation and 10% testing from 30% temp... ", end="")
     X_val, X_test, y_val, y_test = train_test_split(X_tmp, y_tmp, test_size = test_ratio / (test_ratio + validation_ratio))
     print("Done.")
 
@@ -228,10 +228,8 @@ def begin_machine_learning():
         overallTest.append(item)
     res = metrics.accuracy_score(y_test, y_pred)
     print("Accuracy Score of Training Dataset from Test Dataset:", res)
-    last = metrics.accuracy_score(overallTest, overallPred)
-    print("Overall Average Accuracy:",last)
     print("Report")
-    print(metrics.classification_report(overallTest, overallPred))
+    print(metrics.classification_report(y_test, y_pred))
 
     print("yay")
 # -----------------------------------------------------------------------------------------
